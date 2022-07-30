@@ -1,9 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useQuery } from 'react-query';
+import { getFashion, getSports, GET_ARTICLES } from './queries';
 import Container from '@mui/material/Container';
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Sorting, { SortMode, SortObject } from '../../components/Sorting';
 import Filters, { Filter } from '../../components/Filters';
 import ArticlesList from '../../components/ArticlesList';
+import { Article } from './types';
+import { sortArticles } from './utils';
 
 interface ArticlesWidgetProps {
   filters: Filter[];
@@ -12,6 +18,21 @@ interface ArticlesWidgetProps {
 const ArticlesWidget: React.FC<ArticlesWidgetProps> = (props) => {
   const [filters, setFilters] = useState<Filter[]>(props.filters);
   const [sortMode, setSortMode] = useState<SortMode>(SortMode.Descenfing);
+  const [articles, setArticles] = useState<Article[]>([]);
+
+  const handleQuery = () => {
+    // filters.filter(({enabled}) => enabled)
+    return getSports();
+  };
+
+  const { isLoading, isError, data, error } = useQuery(GET_ARTICLES, handleQuery);
+
+  useEffect(() => {
+    if (!isLoading) {
+      const sortedArticles = sortArticles(sortMode, data.articles);
+      setArticles(sortedArticles);
+    }
+  }, [isLoading, data, sortMode]);
 
   const handleFiltersChange = (filterName: string, enabled: boolean) => {
     const updatedFilters = filters.map((item) => {
@@ -39,29 +60,6 @@ const ArticlesWidget: React.FC<ArticlesWidgetProps> = (props) => {
     handleFiltersChange,
   };
 
-  const articlesProps = {
-    data: [
-      {
-        id: 1,
-        date: '2. februar 2019',
-        imageUrl: 'https://placeimg.com/280/180/nature',
-        category: 'sport',
-        title: 'Solskjær fikk klar beskjed fra Røkke og Gjelsten: – Ikke kom tilbake!',
-        preamble:
-          'Ole Gunnar Solskjær forteller om den spesielle samtalen med de to Molde-investorene.',
-      },
-      {
-        id: 2,
-        date: '3. februar 2019',
-        imageUrl: 'https://placeimg.com/280/180/nature',
-        category: 'sport',
-        title: 'Solskjær fikk klar beskjed fra Røkke og Gjelsten: – Ikke kom tilbake!',
-        preamble:
-          'Ole Gunnar Solskjær forteller om den spesielle samtalen med de to Molde-investorene.',
-      },
-    ],
-  };
-
   return (
     <Container fixed>
       <Grid container direction="column" spacing={2}>
@@ -73,7 +71,13 @@ const ArticlesWidget: React.FC<ArticlesWidgetProps> = (props) => {
             <Filters {...filtersProps} />
           </Grid>
           <Grid item>
-            <ArticlesList {...articlesProps} />
+            {isLoading ? (
+              <Box sx={{ display: 'flex' }}>
+                <CircularProgress />
+              </Box>
+            ) : (
+              <ArticlesList data={articles} />
+            )}
           </Grid>
         </Grid>
       </Grid>

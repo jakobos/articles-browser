@@ -7,10 +7,11 @@ import Typography from '@mui/material/Typography';
 import Checkbox from '@mui/material/Checkbox';
 import styles from './styles';
 import { TestId } from './types';
+import { DataSources } from '../../types/types';
 import { Theme } from '@mui/material';
 
 export interface Filter {
-  name: string;
+  name: DataSources;
   enabled: boolean;
 }
 interface FiltersProps {
