@@ -1,6 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import ArticleItem, { Img } from '../ArticleItem/index';
+import { testIdRule } from '../../utils/constants';
+import { TestId } from '../ArticleItem/types';
 
 const mockProps = {
   id: '1',
@@ -22,17 +24,17 @@ afterEach(() => {
 });
 
 it('has image', () => {
-  expect(wrapped.find(Img).length).toEqual(1);
+  expect(wrapped.find(testIdRule(TestId.Image)).length).toEqual(1);
 });
 
 it('has title', () => {
-  expect(wrapped.find('[variant="subtitle1"]').length).toEqual(1);
+  expect(wrapped.find(testIdRule(TestId.Title)).length).toEqual(1);
 });
 
 it('has preamble', () => {
-  expect(wrapped.find('[variant="body2"]').length).toEqual(1);
+  expect(wrapped.find(testIdRule(TestId.Preamble)).length).toEqual(1);
 });
 
 it('has date', () => {
-  expect(wrapped.find('[variant="subtitle2"]').length).toEqual(1);
+  expect(wrapped.find(testIdRule(TestId.Date)).length).toEqual(2);
 });
