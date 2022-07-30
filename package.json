@@ -4,7 +4,7 @@
   "description": "frontend assignment task js",
   "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "react-scripts test",
     "dev": "webpack serve --mode=development",
     "build": "webpack --mode=production",
     "pretty": "prettier --write \"./**/*.{js,jsx,ts,tsx,json,scss}\"",
@@ -41,8 +41,11 @@
     "@emotion/react": "^11.9.3",
     "@emotion/styled": "^11.9.3",
     "@mui/material": "^5.9.2",
+    "@zarconontol/enzyme-adapter-react-18": "^0.7.3",
+    "enzyme": "^3.11.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-scripts": "^5.0.1"
   },
   "prettier": {
     "singleQuote": true,
