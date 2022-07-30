@@ -20,6 +20,7 @@ const Filters: React.FC<FiltersProps> = (props) => {
   const preparedFilters = filters.map((filter) => {
     return (
       <FormControlLabel
+        key={`${filter}-key`}
         test-id={`filter-${filter.toLowerCase()}`}
         control={<Checkbox />}
         label={filter}
