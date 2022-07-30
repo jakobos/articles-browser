@@ -1,19 +1,42 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Sorting, { SortMode, SortObject } from '../../components/Sorting';
-import Filters from '../../components/Filters';
+import Filters, { Filter } from '../../components/Filters';
 import ArticlesList from '../../components/ArticlesList';
 
-const ArticlesWidget: React.FC = () => {
+interface ArticlesWidgetProps {
+  filters: Filter[];
+}
+
+const ArticlesWidget: React.FC<ArticlesWidgetProps> = (props) => {
+  const [filters, setFilters] = useState<Filter[]>(props.filters);
+  const [sortMode, setSortMode] = useState<SortMode>(SortMode.Descenfing);
+
+  const handleFiltersChange = (filterName: string, enabled: boolean) => {
+    const updatedFilters = filters.map((item) => {
+      if (item.name === filterName) {
+        return { ...item, enabled };
+      }
+      return item;
+    });
+    setFilters(updatedFilters);
+  };
+
+  const handleSortChange = (sortMode: SortMode) => {
+    setSortMode(sortMode);
+  };
+
   const sortingProps = {
     sortObject: SortObject.Date,
-    mode: SortMode.Ascending,
+    mode: sortMode,
+    handleChange: handleSortChange,
   };
 
   const filtersProps = {
     title: 'Data Sources',
-    filters: ['Sport', 'Fashion'],
+    filters,
+    handleFiltersChange,
   };
 
   const articlesProps = {

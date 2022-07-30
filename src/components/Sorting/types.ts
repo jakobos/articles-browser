@@ -4,8 +4,8 @@ export enum TestId {
 }
 
 export enum SortMode {
-  Ascending,
-  Descenfing,
+  Ascending = 'ascending',
+  Descenfing = 'descending',
 }
 
 export enum SortObject {

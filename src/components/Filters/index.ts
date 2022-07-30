@@ -1,1 +1,1 @@
-export { default } from './Filters';
+export { default, Filter } from './Filters';

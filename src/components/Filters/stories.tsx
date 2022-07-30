@@ -15,6 +15,7 @@ const Default = Template.bind({});
 Default.args = {
   title: 'Data Sources',
   filters: ['Sport', 'Fashion'],
+  handleFiltersChange: (name: string, checked: boolean) => {},
 };
 
 export { Default };

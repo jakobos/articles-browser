@@ -12,10 +12,17 @@ import styles from './styles';
 interface SortingProps {
   sortObject: SortObject;
   mode: SortMode;
+  handleChange: (mode: SortMode) => void;
 }
 
 const Sorting: React.FC<SortingProps> = (props) => {
-  const { sortObject, mode } = props;
+  const { sortObject, mode, handleChange } = props;
+
+  const handleChangeSortingMode = () => {
+    const nextSortMode = mode === SortMode.Ascending ? SortMode.Descenfing : SortMode.Ascending;
+    handleChange(nextSortMode);
+  };
+
   const currentIcon =
     mode === SortMode.Ascending ? (
       <ArrowDropUpIcon fontSize="small" />
@@ -36,7 +43,9 @@ const Sorting: React.FC<SortingProps> = (props) => {
         </Grid>
         <Grid item xs={1}>
           <Tooltip title={currentTooltip}>
-            <IconButton test-id={TestId.Icon}>{currentIcon}</IconButton>
+            <IconButton test-id={TestId.Icon} onClick={handleChangeSortingMode}>
+              {currentIcon}
+            </IconButton>
           </Tooltip>
         </Grid>
       </Grid>
