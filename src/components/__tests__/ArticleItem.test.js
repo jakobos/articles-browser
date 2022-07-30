@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import ArticleItem, { Img } from '../ArticleItem/index';
+import ArticleItem from '../ArticleItem/index';
 import { testIdRule } from '../../utils/constants';
 import { TestId } from '../ArticleItem/types';
 

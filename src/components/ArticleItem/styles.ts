@@ -11,9 +11,11 @@ export default {
   },
   paper: {
     p: 2,
-    margin: 'auto',
-    maxWidth: 600,
+    padding: '16px',
+    maxWidth: 700,
+    marginBottom: '8px',
     flexGrow: 1,
+    elevation: 2,
     backgroundColor: (theme: Theme) => (theme.palette.mode === 'dark' ? '#1A2027' : '#fff'),
   },
 };

@@ -1,1 +1,1 @@
-export { default, Img } from './ArticleItem';
+export { default, ArticleItemProps } from './ArticleItem';

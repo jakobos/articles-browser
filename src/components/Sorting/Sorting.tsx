@@ -28,12 +28,13 @@ const Sorting: React.FC<SortingProps> = (props) => {
   return (
     <Paper sx={styles.paper}>
       <Grid container spacing={0}>
-        <Grid item>
+        <Grid item xs={9} />
+        <Grid item xs={2}>
           <Typography test-id={TestId.Title} variant="subtitle1">
             Sort by {sortObject}
           </Typography>
         </Grid>
-        <Grid item>
+        <Grid item xs={1}>
           <Tooltip title={currentTooltip}>
             <IconButton test-id={TestId.Icon}>{currentIcon}</IconButton>
           </Tooltip>

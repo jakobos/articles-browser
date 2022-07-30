@@ -7,7 +7,7 @@ import styles from './styles';
 import { TestId } from './types';
 
 export const Img = styled('img')(styles.img);
-interface ArticleItemProps {
+export interface ArticleItemProps {
   id: number;
   date: string;
   imageUrl: string;
