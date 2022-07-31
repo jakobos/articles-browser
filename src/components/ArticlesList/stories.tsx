@@ -16,7 +16,7 @@ Default.args = {
   data: [
     {
       id: 789702,
-      date: '2. februar 2019',
+      date: new Date(2019, 5, 10),
       imageUrl: 'https://placeimg.com/280/180/nature',
       category: 'sport',
       title: 'Vålerengas førsterekke smadrer rivalene: - Seriegullet er I våre hender',
@@ -25,7 +25,7 @@ Default.args = {
     },
     {
       id: 123544,
-      date: '1. oktober 2018',
+      date: new Date(2018, 8, 10),
       imageUrl: 'https://placeimg.com/280/180/nature',
       category: 'sport',
       title: 'Solskjær fikk klar beskjed fra Røkke og Gjelsten: – Ikke kom tilbake!',

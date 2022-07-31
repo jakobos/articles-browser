@@ -16,6 +16,7 @@ const Default = Template.bind({});
 Default.args = {
   sortObject: SortObject.Date,
   mode: SortMode.Ascending,
+  handleChange: (mode: SortMode) => {},
 };
 
 export { Default };

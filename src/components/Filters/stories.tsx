@@ -14,7 +14,16 @@ const Template: ComponentStory<typeof Component> = (args) => {
 const Default = Template.bind({});
 Default.args = {
   title: 'Data Sources',
-  filters: ['Sport', 'Fashion'],
+  filters: [
+    {
+      name: 'Sports',
+      enabled: false,
+    },
+    {
+      name: 'Fashion',
+      enabled: false,
+    },
+  ],
   handleFiltersChange: (name: string, checked: boolean) => {},
 };
 

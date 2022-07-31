@@ -14,7 +14,7 @@ const Template: ComponentStory<typeof Component> = (args) => {
 const Default = Template.bind({});
 Default.args = {
   id: 1,
-  date: '2. februar 2019',
+  date: new Date(),
   imageUrl: 'https://placeimg.com/280/180/nature',
   category: 'sport',
   title: 'Solskjær fikk klar beskjed fra Røkke og Gjelsten: – Ikke kom tilbake!',
