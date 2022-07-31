@@ -1,16 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useQuery } from 'react-query';
-import { getFashion, getSports, GET_ARTICLES } from './queries';
-import Container from '@mui/material/Container';
-import CircularProgress from '@mui/material/CircularProgress';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import Sorting, { SortMode, SortObject } from '../../components/Sorting';
-import Filters, { Filter } from '../../components/Filters';
-import ArticlesList from '../../components/ArticlesList';
+import { useQuery } from '@tanstack/react-query';
+import { getAllArticles, getFashion, getSports, GET_ARTICLES } from './queries';
+import { SortMode, SortObject } from '../../components/Sorting';
+import { Filter } from '../../components/Filters';
 import { Article } from './types';
 import { sortArticles } from './utils';
-
+import { DataSources } from '../../types/types';
+import ArticlesWidgetView from './view';
 interface ArticlesWidgetProps {
   filters: Filter[];
 }
@@ -21,18 +17,45 @@ const ArticlesWidget: React.FC<ArticlesWidgetProps> = (props) => {
   const [articles, setArticles] = useState<Article[]>([]);
 
   const handleQuery = () => {
-    // filters.filter(({enabled}) => enabled)
+    const activeFilters = filters.filter(({ enabled }) => enabled);
+    if (activeFilters.length > 1) {
+      return getAllArticles();
+    }
+    if (activeFilters[0].name === DataSources.Fashion) {
+      return getFashion();
+    }
     return getSports();
   };
 
-  const { isLoading, isError, data, error } = useQuery(GET_ARTICLES, handleQuery);
+  const queryEnabled = filters
+    .map(({ enabled }) => enabled)
+    .reduce((curr, next) => curr || next, false);
+
+  const { isLoading, isError, data, error, refetch } = useQuery([GET_ARTICLES], handleQuery, {
+    enabled: queryEnabled,
+  });
 
   useEffect(() => {
-    if (!isLoading) {
-      const sortedArticles = sortArticles(sortMode, data.articles);
+    if (!isLoading && queryEnabled) {
+      const sortedArticles = sortArticles(sortMode, data);
       setArticles(sortedArticles);
     }
-  }, [isLoading, data, sortMode]);
+  }, [isLoading, data]);
+
+  useEffect(() => {
+    if (articles.length > 0) {
+      const sortedArticles = sortArticles(sortMode, articles);
+      setArticles([...sortedArticles]);
+    }
+  }, [sortMode]);
+
+  useEffect(() => {
+    if (queryEnabled) {
+      refetch();
+    } else {
+      setArticles([]);
+    }
+  }, [filters]);
 
   const handleFiltersChange = (filterName: string, enabled: boolean) => {
     const updatedFilters = filters.map((item) => {
@@ -60,29 +83,16 @@ const ArticlesWidget: React.FC<ArticlesWidgetProps> = (props) => {
     handleFiltersChange,
   };
 
-  return (
-    <Container fixed>
-      <Grid container direction="column" spacing={2}>
-        <Grid item>
-          <Sorting {...sortingProps} />
-        </Grid>
-        <Grid container direction="row" spacing={2}>
-          <Grid item>
-            <Filters {...filtersProps} />
-          </Grid>
-          <Grid item>
-            {isLoading ? (
-              <Box sx={{ display: 'flex' }}>
-                <CircularProgress />
-              </Box>
-            ) : (
-              <ArticlesList data={articles} />
-            )}
-          </Grid>
-        </Grid>
-      </Grid>
-    </Container>
-  );
+  const widgetProps = {
+    filtersProps,
+    sortingProps,
+    articles,
+    isLoading,
+    isError,
+    queryEnabled,
+  };
+
+  return <ArticlesWidgetView {...widgetProps} />;
 };
 
 export default ArticlesWidget;

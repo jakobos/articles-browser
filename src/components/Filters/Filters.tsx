@@ -14,7 +14,7 @@ export interface Filter {
   name: DataSources;
   enabled: boolean;
 }
-interface FiltersProps {
+export interface FiltersProps {
   title: string;
   filters: Filter[];
   handleFiltersChange: (filterName: string, enabled: boolean) => void;

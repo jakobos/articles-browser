@@ -1,5 +1,5 @@
 import React from 'react';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Filter } from './components/Filters';
 import ThemeProvider from './providers/ThemeProvider';
 import ArticlesWidget from './widgets/ArticlesWidget/ArticlesWidget';

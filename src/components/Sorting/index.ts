@@ -1,2 +1,2 @@
-export { default } from './Sorting';
+export { default, SortingProps } from './Sorting';
 export { SortMode, SortObject } from './types';

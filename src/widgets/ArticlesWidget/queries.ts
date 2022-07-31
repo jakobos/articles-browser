@@ -1,6 +1,4 @@
-import { raw } from '@storybook/react';
-import axios from 'axios';
-import { isEmpty } from 'lodash';
+import axios, { AxiosError } from 'axios';
 import { Article, ArticlesData } from './types';
 
 const API_URL = 'http://localhost:6010/articles';
@@ -20,13 +18,18 @@ interface RawArticle {
 
 interface RawArticleResponse {
   articles: RawArticle[];
+  message?: string;
+}
+
+interface ErrorResponse {
+  message: string;
 }
 
 const parseArticle = (article: RawArticle): Article => {
   const { date, image } = article;
   const rawDate = new Date(date);
   const parsedDate = isNaN(rawDate.getMilliseconds()) ? null : rawDate;
-  const parsedImageUrl = isEmpty(image) ? null : image;
+  const parsedImageUrl = image === '' ? null : image;
   return {
     ...article,
     date: parsedDate,
@@ -34,20 +37,37 @@ const parseArticle = (article: RawArticle): Article => {
   };
 };
 
-const getArticles = async (path: string): Promise<ArticlesData> => {
-  const res = await axios.get<RawArticleResponse>(`${API_URL}/${path}`);
+const getArticles = async (path: string): Promise<Article[]> => {
+  try {
+    const res = await axios.get<RawArticleResponse>(`${API_URL}/${path}`);
 
-  const parsedArticles = res.data.articles.map((rawArticle) => parseArticle(rawArticle));
-
-  return { articles: parsedArticles };
+    const { status, data } = res;
+    const parsedArticles = data.articles.map((rawArticle) => parseArticle(rawArticle));
+    return parsedArticles;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.log(error.response.data);
+      console.log(error.response.status);
+      console.log(error.response.headers);
+    } else {
+      console.log('Error', error.message);
+    }
+  }
+  return [];
 };
 
-const getSports = async (): Promise<ArticlesData> => {
+const getSports = async (): Promise<Article[]> => {
   return getArticles(SPORTS_PATH);
 };
 
-const getFashion = async (): Promise<ArticlesData> => {
+const getFashion = async (): Promise<Article[]> => {
   return getArticles(FASHION_PATH);
 };
 
-export { getSports, getFashion, GET_ARTICLES };
+const getAllArticles = async (): Promise<Article[]> => {
+  const sports = await getSports();
+  const fashion = await getFashion();
+  return [...sports, ...fashion];
+};
+
+export { getSports, getFashion, getAllArticles, GET_ARTICLES };

@@ -9,7 +9,7 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { TestId, SortMode, SortObject } from './types';
 import styles from './styles';
 
-interface SortingProps {
+export interface SortingProps {
   sortObject: SortObject;
   mode: SortMode;
   handleChange: (mode: SortMode) => void;
