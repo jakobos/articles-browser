@@ -3,13 +3,12 @@ import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import ImageNotSupportedIcon from '@mui/icons-material/ImageNotSupported';
-import Tooltip from '@mui/material/Tooltip';
+import commonStyles from '../../utils/commonStyles';
 import styles from './styles';
 import { TestId } from './types';
 import { parseDate } from './utils';
 
-export const Img = styled('img')(styles.img);
+const Img = styled('img')(styles.img);
 export interface ArticleItemProps {
   id: number;
   date: Date | null;
@@ -24,22 +23,17 @@ const ArticleItem: React.FC<ArticleItemProps> = (props) => {
 
   const parsedDate = parseDate(date);
   const image = imageUrl ? <Img test-id={TestId.Image} src={imageUrl} /> : null;
-  // ) : (
-  //   <Tooltip sx={{}}title="No image available for this article">
-  //     <ImageNotSupportedIcon fontSize="large" />
-  //   </Tooltip>
-  // );
 
   return (
-    <Paper sx={styles.paper}>
+    <Paper sx={commonStyles.paper}>
       <Grid container spacing={2}>
-        <Grid item xs={4}>
+        <Grid item xs={4} sx={styles.imageGrid}>
           {image}
         </Grid>
         <Grid item xs={8} sm container>
           <Grid item xs container direction="column" spacing={2}>
             <Grid item xs>
-              <Typography test-id={TestId.Title} gutterBottom variant="subtitle1" component="div">
+              <Typography test-id={TestId.Title} gutterBottom variant="h6" component="div">
                 {title}
               </Typography>
               <Typography

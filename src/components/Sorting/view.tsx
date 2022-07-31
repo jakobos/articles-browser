@@ -7,7 +7,7 @@ import Tooltip from '@mui/material/Tooltip';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { TestId, SortMode, SortObject } from './types';
-import styles from './styles';
+import commonStyles from '../../utils/commonStyles';
 
 export interface SortingProps {
   sortObject: SortObject;
@@ -33,15 +33,14 @@ const Sorting: React.FC<SortingProps> = (props) => {
   const currentTooltip = mode === SortMode.Ascending ? 'Ascending' : 'Descending';
 
   return (
-    <Paper sx={styles.paper}>
-      <Grid container spacing={0}>
-        <Grid item xs={9} />
-        <Grid item xs={2}>
+    <Paper sx={commonStyles.paper}>
+      <Grid container spacing={0} alignItems={'center'} justifyContent={'end'}>
+        <Grid item xs={6} sm={2}>
           <Typography test-id={TestId.Title} variant="subtitle1">
             Sort by {sortObject}
           </Typography>
         </Grid>
-        <Grid item xs={1}>
+        <Grid item xs={6} sm={1}>
           <Tooltip title={currentTooltip}>
             <IconButton test-id={TestId.Icon} onClick={handleChangeSortingMode}>
               {currentIcon}

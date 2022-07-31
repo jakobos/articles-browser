@@ -6,7 +6,16 @@ import { testIdRule } from '../../utils/constants';
 
 const mockProps = {
   title: 'Data Sources',
-  filters: ['Sport', 'Fashion'],
+  filters: [
+    {
+      name: 'Sport',
+      enabled: false,
+    },
+    {
+      name: 'Fashion',
+      enabled: false,
+    },
+  ],
 };
 
 let wrapped;

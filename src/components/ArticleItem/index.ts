@@ -1,1 +1,1 @@
-export { default, ArticleItemProps } from './ArticleItem';
+export { default, ArticleItemProps } from './view';

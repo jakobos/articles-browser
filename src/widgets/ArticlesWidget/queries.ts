@@ -1,5 +1,5 @@
-import axios, { AxiosError } from 'axios';
-import { Article, ArticlesData } from './types';
+import axios from 'axios';
+import { Article } from './types';
 
 const API_URL = 'http://localhost:6010/articles';
 const SPORTS_PATH = 'sports';
@@ -21,10 +21,6 @@ interface RawArticleResponse {
   message?: string;
 }
 
-interface ErrorResponse {
-  message: string;
-}
-
 const parseArticle = (article: RawArticle): Article => {
   const { date, image } = article;
   const rawDate = new Date(date);
@@ -40,8 +36,8 @@ const parseArticle = (article: RawArticle): Article => {
 const getArticles = async (path: string): Promise<Article[]> => {
   try {
     const res = await axios.get<RawArticleResponse>(`${API_URL}/${path}`);
+    const { data } = res;
 
-    const { status, data } = res;
     const parsedArticles = data.articles.map((rawArticle) => parseArticle(rawArticle));
     return parsedArticles;
   } catch (error) {

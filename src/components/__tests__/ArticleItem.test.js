@@ -6,7 +6,7 @@ import { TestId } from '../ArticleItem/types';
 
 const mockProps = {
   id: '1',
-  date: '2. februar 2019',
+  date: new Date(),
   imageUrl: 'https://placeimg.com/280/180/nature',
   category: 'sport',
   title: 'Solskjær fikk klar beskjed fra Røkke og Gjelsten: – Ikke kom tilbake!',

@@ -2,10 +2,10 @@ import React from 'react';
 import Stack from '@mui/material/Stack';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
-import { styled } from '@mui/material/styles';
 import ArticleItem, { ArticleItemProps } from '../ArticleItem';
 import { TestId } from './types';
-import styles from './styles';
+import commonStyles from '../../utils/commonStyles';
+
 interface ArticlesListProps {
   data: ArticleItemProps[];
 }
@@ -16,12 +16,12 @@ const ArticlesList: React.FC<ArticlesListProps> = (props) => {
     <ArticleItem test-id={TestId.ArticleItem} key={articleData.id} {...articleData} />
   ));
   return (
-    <Stack spacing={2} sx={styles.stack}>
+    <Stack spacing={4}>
       {articles.length > 0 ? (
         articles
       ) : (
-        <Paper sx={styles.paper}>
-          <Typography variant="subtitle1" component="div">
+        <Paper sx={commonStyles.paper}>
+          <Typography variant="subtitle1" component="div" textAlign={'center'}>
             No results
           </Typography>
         </Paper>

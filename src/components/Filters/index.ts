@@ -1,1 +1,1 @@
-export { default, Filter, FiltersProps } from './Filters';
+export { default, Filter, FiltersProps } from './view';

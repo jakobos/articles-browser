@@ -7,11 +7,12 @@ import { Article } from './types';
 import { sortArticles } from './utils';
 import { DataSources } from '../../types/types';
 import ArticlesWidgetView from './view';
+
 interface ArticlesWidgetProps {
   filters: Filter[];
 }
 
-const ArticlesWidget: React.FC<ArticlesWidgetProps> = (props) => {
+const ArticlesWidgetContainer: React.FC<ArticlesWidgetProps> = (props) => {
   const [filters, setFilters] = useState<Filter[]>(props.filters);
   const [sortMode, setSortMode] = useState<SortMode>(SortMode.Descenfing);
   const [articles, setArticles] = useState<Article[]>([]);
@@ -95,4 +96,4 @@ const ArticlesWidget: React.FC<ArticlesWidgetProps> = (props) => {
   return <ArticlesWidgetView {...widgetProps} />;
 };
 
-export default ArticlesWidget;
+export default ArticlesWidgetContainer;

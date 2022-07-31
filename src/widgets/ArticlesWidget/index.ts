@@ -1,1 +1,1 @@
-export { default } from './ArticlesWidget';
+export { default } from './container';

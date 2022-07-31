@@ -1,2 +1,2 @@
-export { default, SortingProps } from './Sorting';
+export { default, SortingProps } from './view';
 export { SortMode, SortObject } from './types';

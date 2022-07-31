@@ -1,11 +1,10 @@
 import React from 'react';
 import Container from '@mui/material/Container';
-import CircularProgress from '@mui/material/CircularProgress';
-import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import Sorting, { SortMode, SortObject } from '../../components/Sorting';
-import Filters, { Filter } from '../../components/Filters';
+import Sorting from '../../components/Sorting';
+import Filters from '../../components/Filters';
 import ArticlesList from '../../components/ArticlesList';
+import LoadingProgress from '../../components/LoadingProgress';
 import { SortingProps } from '../../components/Sorting';
 import { FiltersProps } from '../../components/Filters';
 import { ArticleItemProps } from '../../components/ArticleItem';
@@ -20,27 +19,18 @@ interface ArticlesWidgetViewProps {
 }
 
 const ArticlesWidgetView: React.FC<ArticlesWidgetViewProps> = (props) => {
-  const { sortingProps, filtersProps, articles, isLoading, isError, queryEnabled } = props;
+  const { sortingProps, filtersProps, articles, isLoading, queryEnabled } = props;
   return (
     <Container fixed>
-      <Grid container direction="column" spacing={2}>
-        <Grid item>
+      <Grid container spacing={4}>
+        <Grid item xs={6} sm={12} order={{ xs: 2, sm: 1 }}>
           <Sorting {...sortingProps} />
         </Grid>
-        <Grid container direction="row" spacing={2}>
-          <Grid item>
-            <Filters {...filtersProps} />
-          </Grid>
-          <Grid item>
-            {isError && 'Error :('}
-            {isLoading && queryEnabled ? (
-              <Box sx={{ display: 'flex' }}>
-                <CircularProgress />
-              </Box>
-            ) : (
-              <ArticlesList data={articles} />
-            )}
-          </Grid>
+        <Grid item xs={6} sm={3} order={{ xs: 1, sm: 2 }}>
+          <Filters {...filtersProps} />
+        </Grid>
+        <Grid item xs={12} sm={9} order={{ xs: 3 }}>
+          {isLoading && queryEnabled ? <LoadingProgress /> : <ArticlesList data={articles} />}
         </Grid>
       </Grid>
     </Container>

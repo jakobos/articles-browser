@@ -1,14 +1,12 @@
 import React from 'react';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
-import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Typography from '@mui/material/Typography';
 import Checkbox from '@mui/material/Checkbox';
-import styles from './styles';
+import commonStyles from '../../utils/commonStyles';
 import { TestId } from './types';
 import { DataSources } from '../../types/types';
-import { Theme } from '@mui/material';
 
 export interface Filter {
   name: DataSources;
@@ -30,25 +28,27 @@ const Filters: React.FC<FiltersProps> = (props) => {
   const preparedFilters = filters.map((filter) => {
     const { name, enabled } = filter;
     return (
-      <FormControlLabel
-        key={`${name}-key`}
-        test-id={`filter-${name.toLowerCase()}`}
-        control={<Checkbox checked={enabled} onChange={handleChange} name={name} />}
-        label={name}
-      />
+      <Grid item key={name}>
+        <FormControlLabel
+          key={`${name}-key`}
+          test-id={`filter-${name.toLowerCase()}`}
+          control={<Checkbox checked={enabled} onChange={handleChange} name={name} />}
+          label={name}
+        />
+      </Grid>
     );
   });
 
   return (
-    <Paper sx={styles.paper}>
+    <Paper sx={commonStyles.paper}>
       <Grid container spacing={2}>
-        <Grid item>
+        <Grid item xs={6} sm={12}>
           <Typography test-id={TestId.Title} variant="subtitle1">
             {title}
           </Typography>
         </Grid>
-        <Grid item>
-          <FormGroup test-id={TestId.Filters}>{preparedFilters}</FormGroup>
+        <Grid test-id={TestId.Filters} container direction={{ xs: 'row', sm: 'column' }}>
+          {preparedFilters}
         </Grid>
       </Grid>
     </Paper>
