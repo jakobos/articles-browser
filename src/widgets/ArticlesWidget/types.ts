@@ -6,7 +6,3 @@ export interface Article {
   title: string;
   preamble: string;
 }
-
-export interface ArticlesData {
-  articles: Article[];
-}
