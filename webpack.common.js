@@ -1,5 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CompressionPlugin = require('compression-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
   entry: './src/index.tsx',
@@ -23,9 +25,13 @@ module.exports = {
     contentBase: './dist',
     port: 3000,
   },
+  optimization: {
+    minimizer: [new UglifyJsPlugin()],
+  },
   plugins: [
     new HtmlWebpackPlugin({
       template: 'public/index.html',
     }),
+    new CompressionPlugin(),
   ],
 };
